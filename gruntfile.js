@@ -36,40 +36,6 @@ module.exports = function (grunt) {
 
     clean: ['coverage', 'coverageLcov'],
 
-    qunit: {
-      files: ['test/*.html'],
-      puppeteer: {
-        args: [
-          '--disable-web-security',
-          '--allow-file-access-from-files',
-          '--user-data-dir=/tmp'
-        ]
-      }
-    },
-
-    karma: {
-      options: {
-        configFile: 'karma.conf.js'
-      },
-      travis: {
-        singleRun: true,
-        browsers: ['Chrome'], // 'PhantomJS'
-        coverageReporter: {
-          type: 'lcov',
-          dir: 'coverageLcov/'
-        }
-      },
-      single: {
-        singleRun: true,
-        browsers: ['Chrome', 'Firefox'] // 'Safari', 'PhantomJS'
-      },
-      watch: {
-        singleRun: false,
-        browsers: ['Chrome'], // 'Firefox', 'Safari', 'PhantomJS'
-        reporters: ['logcapture', 'progress']
-      }
-    },
-
     coveralls: {
       options: {
         debug: true,
@@ -182,18 +148,12 @@ module.exports = function (grunt) {
     }
   })
 
-  grunt.registerTask('default', ['notest', 'karma:single'])
+  grunt.registerTask('default', ['notest'])
   grunt.registerTask('build', ['removeBlock', 'copy', 'uglify'])
   grunt.registerTask('notest', ['eslint', 'jsonlint', 'build'])
-  grunt.registerTask('test', ['clean', 'eslint', 'karma:single', 'qunit'])
-  grunt.registerTask('test-watch', ['clean', 'karma:watch'])
-  grunt.registerTask('travis', [
-    'clean',
-    'notest',
-    'qunit',
-    'karma:travis',
-    'coveralls'
-  ])
+  grunt.registerTask('test', ['clean', 'eslint'])
+  grunt.registerTask('test-watch', ['clean'])
+  grunt.registerTask('travis', ['clean', 'notest', 'coveralls'])
 
   grunt.registerTask('postBump', ['build', 'bump-commit', 'shell'])
   grunt.registerTask('preBump', ['clean', 'notest'])

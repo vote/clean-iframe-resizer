@@ -1355,6 +1355,9 @@
     }
   }
 
+  /*
+  REMOVING THIS CODE TO KEEP THE WINDOW CLEAN
+
   function createJQueryPublicMethod($) {
     if (!$.fn) {
       info('', 'Unable to bind to jQuery, it is not fully loaded.')
@@ -1374,6 +1377,7 @@
   if (window.jQuery) {
     createJQueryPublicMethod(window.jQuery)
   }
+  */
 
   if (typeof define === 'function' && define.amd) {
     define([], factory)
@@ -1381,5 +1385,8 @@
     // Node for browserfy
     module.exports = factory()
   }
+  /*
+  REMOVING THIS LINE TO KEEP CLEAN
   window.iFrameResize = window.iFrameResize || factory()
+  */
 })()
